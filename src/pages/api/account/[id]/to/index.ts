@@ -8,14 +8,14 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      const accountList = await Account.find({}, null, { skip: 2, limit: 3 });
+      const accountList = await Account.find({}, null, { skip: 3, limit: 2 });
       res.status(200).json({
         code: 0,
         data: accountList.map((account) => {
           return {
             label: account.name,
             value: account.id,
-            availableBalance: account.balance,
+            availableBalance: account.balances,
           };
         }),
       });

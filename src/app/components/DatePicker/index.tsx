@@ -14,7 +14,7 @@ const TransactionDatePicker = ({
 }) => {
   const today = dayjs();
   const onChange = (value: Dayjs | null) => {
-    formDataRef.current.timestamp = value ? value.toDate() : formDataRef.current.timestamp;
+    formDataRef.current.timestamp = value ? value.startOf('day').toDate() : formDataRef.current.timestamp;
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

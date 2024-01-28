@@ -19,12 +19,13 @@ const InputFromAccount = ({
       try {
         const apiResponse = await axios.get("/api/account/1");
         setOptions(apiResponse.data.data);
+        setAvailableBalance(apiResponse.data.data.length ? apiResponse.data.data[0].availableBalance : 0);
       } catch (error) {
         console.error(error);
       }
     };
     fetchOptions();
-  }, [refetchOptions]);
+  }, [refetchOptions, setAvailableBalance]);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const index = parseInt((event.target as HTMLInputElement).value, 10);
     formDataRef.current.from = options[index].value;

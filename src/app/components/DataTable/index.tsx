@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 
@@ -27,7 +27,7 @@ const columns: GridColDef<TransferData>[] = [
 ];
 
 const DataTable = () => {
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = useState<TransferData[]>([]);
   useEffect(() => {
     const fetchTransferList = async () => {
       try {

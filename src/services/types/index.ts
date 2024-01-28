@@ -23,3 +23,8 @@ type CurrencyOptionData = {
   label: string;
   value: string;
 };
+
+type CurrencyBalance = {
+  currency: string;
+  amount: number;
+}

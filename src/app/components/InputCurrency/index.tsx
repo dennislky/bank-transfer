@@ -6,8 +6,10 @@ import React, { useState, useEffect, MutableRefObject } from "react";
 
 const InputCurrency = ({
   formDataRef,
+  setSelectedCurrency,
 }: {
   formDataRef: MutableRefObject<TransferData>;
+  setSelectedCurrency: Function;
 }) => {
   const [options, setOptions] = useState<CurrencyOptionData[]>([]);
   useEffect(() => {
@@ -22,7 +24,9 @@ const InputCurrency = ({
     fetchOptions();
   }, []);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    formDataRef.current.currency = (event.target as HTMLInputElement).value;
+    const value = (event.target as HTMLInputElement).value;
+    formDataRef.current.currency = value;
+    setSelectedCurrency(value);
   };
   return (
     <TextField
