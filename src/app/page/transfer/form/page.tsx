@@ -1,45 +1,10 @@
 import TransactionDatePicker from "@/app/components/DatePicker";
-import { Box, TextField, MenuItem } from "@mui/material";
+import InputCurrency from "@/app/components/InputCurrency";
+import InputFromAccount from "@/app/components/InputFromAccount";
+import { Box, TextField } from "@mui/material";
 import React from "react";
 
-const transferForm = () => {
-  const options = {
-    fromAccounts: [
-      {
-        label: "test from 1",
-        value: "11111111",
-        availableBalance: 10,
-      },
-      {
-        label: "test from 1",
-        value: "22222222",
-        availableBalance: 20,
-      },
-      {
-        label: "test from 1",
-        value: "33333333",
-        availableBalance: 30,
-      },
-    ],
-    currencies: [
-      {
-        label: "$",
-        value: "USD",
-      },
-      {
-        label: "€",
-        value: "EUR",
-      },
-      {
-        label: "¥",
-        value: "JPY",
-      },
-      {
-        label: "฿",
-        value: "BTC",
-      },
-    ],
-  };
+const TransferForm: React.FC = () => {
   return (
     <Box
       component="form"
@@ -51,21 +16,7 @@ const transferForm = () => {
       <div className="flex flex-col p-4">
         <span>Create Transfer Form</span>
         <TransactionDatePicker />
-        <TextField
-          required
-          id="filled-from-account-number"
-          select
-          label="From Account Number"
-          defaultValue={options.fromAccounts[0].value || ""}
-          helperText="Please select your account to transfer from"
-          variant="filled"
-        >
-          {options.fromAccounts.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {`${option.label} (${option.value})`}
-            </MenuItem>
-          ))}
-        </TextField>
+        <InputFromAccount />
         <TextField
           required
           id="filled-to-account-number"
@@ -93,24 +44,10 @@ const transferForm = () => {
           label="Description"
           variant="filled"
         />
-        <TextField
-          required
-          id="filled-currency"
-          select
-          label="Currency"
-          defaultValue={options.currencies[0].value || "USD"}
-          helperText="Please select your currency"
-          variant="filled"
-        >
-          {options.currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {`${option.label} (${option.value})`}
-            </MenuItem>
-          ))}
-        </TextField>
+        <InputCurrency />
       </div>
     </Box>
   );
 };
 
-export default transferForm;
+export default TransferForm;

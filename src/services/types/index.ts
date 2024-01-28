@@ -12,3 +12,14 @@ type TransferData = {
   amount: number;
   currency: string;
 };
+
+type AccountOptionData = {
+  label: string;
+  value: number;
+  availableBalanace: number;
+};
+
+type CurrencyOptionData = {
+  label: string;
+  value: string;
+};

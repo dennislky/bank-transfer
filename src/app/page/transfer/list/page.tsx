@@ -1,8 +1,8 @@
 import DataTable from "@/app/components/DataTable";
 import React from "react";
 
-const transferList = () => {
+const TransferList: React.FC = () => {
   return <DataTable />;
 };
 
-export default transferList;
+export default TransferList;
