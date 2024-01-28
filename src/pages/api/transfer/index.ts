@@ -43,7 +43,7 @@ export default async function handler(
         }),
       });
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       res.status(400).json({ code: -1, message: error.message });
     }
   } else if (req.method === "POST") {
@@ -61,7 +61,7 @@ export default async function handler(
       await transfer.save();
       res.status(200).json({ code: 0, data: transfer });
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       res.status(400).json({ code: -1, message: error.message });
     }
   }

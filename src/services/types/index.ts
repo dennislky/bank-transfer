@@ -1,7 +1,7 @@
 type ResponseData = {
   code: number;
   message?: string;
-  data?: any;
+  data?: TransferData | AccountOptionData[] | CurrencyOptionData[];
 };
 
 type TransferData = {
@@ -15,8 +15,8 @@ type TransferData = {
 
 type AccountOptionData = {
   label: string;
-  value: number;
-  availableBalanace: number;
+  value: string;
+  availableBalance: number;
 };
 
 type CurrencyOptionData = {

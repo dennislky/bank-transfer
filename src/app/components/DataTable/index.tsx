@@ -30,9 +30,13 @@ const DataTable = () => {
   const [rows, setRows] = React.useState([]);
   useEffect(() => {
     const fetchTransferList = async () => {
-      const apiResponse = await axios.get("/api/transfer");
-      console.log(apiResponse);
-      setRows(apiResponse.data.data);
+      try {
+        const apiResponse = await axios.get("/api/transfer");
+        setRows(apiResponse.data.data);
+      } catch (error: any) {
+        console.error(error);
+        alert(error.message);
+      }
     };
     fetchTransferList();
   }, []);
@@ -44,7 +48,7 @@ const DataTable = () => {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
         pageSizeOptions={[5, 10]}

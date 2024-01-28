@@ -11,13 +11,13 @@ const getMongooseInstance = async () => {
         instance: { port: MONGO_PORT },
       });
     } catch (error) {
-      console.log("Mongo Memory Server already created!");
+      console.error("Mongo Memory Server already created!");
     }
     try {
       await mongoose.disconnect();
       mongooseInstance = await mongoose.connect(mongoUri);
     } catch (error) {
-      console.log("mongooseInstance connection error", error);
+      console.error("mongooseInstance connection error", error);
     }
   }
   return mongooseInstance;

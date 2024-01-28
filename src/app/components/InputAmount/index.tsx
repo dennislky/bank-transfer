@@ -1,16 +1,24 @@
 import { TextField } from "@mui/material";
-import React, { MutableRefObject } from "react";
+import React, { MutableRefObject, useState } from "react";
 
 const InputAmount = ({
+  availableBalance,
   formDataRef,
 }: {
+  availableBalance: number;
   formDataRef: MutableRefObject<TransferData>;
 }) => {
+  const [error, setError] = useState<string>("");
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    formDataRef.current.amount = parseInt(
-      (event.target as HTMLInputElement).value,
-      10
-    );
+    const value = parseInt((event.target as HTMLInputElement).value, 10);
+    if (value <= 0) {
+      setError("Please input amount > 0");
+    } else if (value > availableBalance) {
+      setError("Please input amount below account's available balance");
+    } else {
+      setError("");
+      formDataRef.current.amount = value;
+    }
   };
   return (
     <TextField
@@ -18,6 +26,8 @@ const InputAmount = ({
       id="filled-amount"
       label="Amount"
       type="number"
+      error={!!error}
+      helperText={error}
       InputLabelProps={{
         shrink: true,
       }}

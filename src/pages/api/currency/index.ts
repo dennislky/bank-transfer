@@ -19,7 +19,7 @@ export default async function handler(
         }),
       });
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       res.status(400).json({ code: -1, message: error.message });
     }
   }

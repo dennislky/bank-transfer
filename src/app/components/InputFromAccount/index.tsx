@@ -6,8 +6,12 @@ import React, { useState, useEffect, MutableRefObject } from "react";
 
 const InputFromAccount = ({
   formDataRef,
+  setAvailableBalance,
+  refetchOptions,
 }: {
   formDataRef: MutableRefObject<TransferData>;
+  setAvailableBalance: Function;
+  refetchOptions: boolean;
 }) => {
   const [options, setOptions] = useState<AccountOptionData[]>([]);
   useEffect(() => {
@@ -20,9 +24,11 @@ const InputFromAccount = ({
       }
     };
     fetchOptions();
-  }, []);
+  }, [refetchOptions]);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    formDataRef.current.from = (event.target as HTMLInputElement).value;
+    const index = parseInt((event.target as HTMLInputElement).value, 10);
+    formDataRef.current.from = options[index].value;
+    setAvailableBalance(options[index].availableBalance);
   };
   return (
     <TextField
@@ -35,8 +41,8 @@ const InputFromAccount = ({
       variant="filled"
       onChange={onChange}
     >
-      {options.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
+      {options.map((option, index) => (
+        <MenuItem key={option.value} value={index}>
           {`${option.label} (${option.value})`}
         </MenuItem>
       ))}

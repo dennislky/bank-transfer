@@ -15,22 +15,22 @@ import InputAmount from "../InputAmount";
 
 const InputForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>();
-  const formDataRef = useRef<TransferData>({
+  const [availableBalance, setAvailableBalance] = useState<number>(0);
+  const [refetchOptions, setRefetchOptions] = useState<boolean>(false);
+  const defaultFormData = {
     timestamp: new Date(),
     from: "11111111",
     to: "33333333",
     amount: 0,
     currency: "USD",
-  });
+  };
+  const formDataRef = useRef<TransferData>(defaultFormData);
   const onClick = async () => {
     try {
       setIsLoading(true);
-      const apiResponse = await axios.post(
-        "/api/transfer",
-        formDataRef.current
-      );
-      console.log(apiResponse);
+      await axios.post("/api/transfer", formDataRef.current);
       alert("Transfer created successfully");
+      setRefetchOptions(!refetchOptions);
       setIsLoading(false);
     } catch (error: any) {
       console.error(error);
@@ -42,9 +42,16 @@ const InputForm = () => {
     <div className="flex flex-col p-4">
       <span>Create Transfer Form</span>
       <TransactionDatePicker formDataRef={formDataRef} />
-      <InputFromAccount formDataRef={formDataRef} />
+      <InputFromAccount
+        formDataRef={formDataRef}
+        setAvailableBalance={setAvailableBalance}
+        refetchOptions={refetchOptions}
+      />
       <InputToAccount formDataRef={formDataRef} />
-      <InputAmount formDataRef={formDataRef} />
+      <InputAmount
+        availableBalance={availableBalance}
+        formDataRef={formDataRef}
+      />
       <InputDescription formDataRef={formDataRef} />
       <InputCurrency formDataRef={formDataRef} />
       <LoadingButton
