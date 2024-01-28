@@ -1,10 +1,8 @@
-import DataTable from '@/components/DataTable';
-import React from 'react';
+import DataTable from "@/app/components/DataTable";
+import React from "react";
 
 const transferList = () => {
-    return (
-        <DataTable />
-    )
-}
+  return <DataTable />;
+};
 
 export default transferList;

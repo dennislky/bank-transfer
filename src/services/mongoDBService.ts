@@ -4,12 +4,27 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 let mongooseInstance: typeof mongoose;
 const getMongooseInstance = async () => {
   if (!mongooseInstance) {
-    const mongoServer = await MongoMemoryServer.create();
-    const mongoUri = mongoServer.getUri();
-    mongooseInstance = await mongoose.connect(mongoUri);
+    let mongoUri = "mongodb://127.0.0.1:27017/";
+    try {
+      const mongoServer = await MongoMemoryServer.create({
+        instance: { port: 27017 },
+      });
+      mongoUri = mongoServer.getUri();
+      console.log("mongoUri", mongoUri);
+    } catch (error) {
+      console.log("Mongo Memory Server already created!");
+    }
+    try {
+      await mongoose.disconnect();
+      mongooseInstance = await mongoose.connect(mongoUri, {
+        bufferCommands: false,
+        autoCreate: false,
+      });
+    } catch (error) {
+      console.log("mongooseInstance connection error", error);
+    }
   }
   return mongooseInstance;
 };
-await getMongooseInstance();
 
 export { getMongooseInstance };
