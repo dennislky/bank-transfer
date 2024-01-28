@@ -1,14 +1,21 @@
 "use client";
 
-import React from "react";
-import dayjs from "dayjs";
+import React, { MutableRefObject } from "react";
+import dayjs, { Dayjs } from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const TransactionDatePicker = () => {
+const TransactionDatePicker = ({
+  formDataRef,
+}: {
+  formDataRef: MutableRefObject<TransferData>;
+}) => {
   const today = dayjs();
+  const onChange = (value: Dayjs | null) => {
+    formDataRef.current.timestamp = value ? value.toDate() : formDataRef.current.timestamp;
+  };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer
@@ -20,6 +27,7 @@ const TransactionDatePicker = () => {
             defaultValue={today}
             minDate={today}
             views={["year", "month", "day"]}
+            onChange={onChange}
           />
         </DemoItem>
       </DemoContainer>

@@ -4,16 +4,16 @@ import { MenuItem, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect, MutableRefObject } from "react";
 
-const InputCurrency = ({
+const InputFromAccount = ({
   formDataRef,
 }: {
   formDataRef: MutableRefObject<TransferData>;
 }) => {
-  const [options, setOptions] = useState<CurrencyOptionData[]>([]);
+  const [options, setOptions] = useState<AccountOptionData[]>([]);
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const apiResponse = await axios.get("/api/currency");
+        const apiResponse = await axios.get("/api/account/1/to");
         setOptions(apiResponse.data.data);
       } catch (error) {
         console.error(error);
@@ -22,16 +22,16 @@ const InputCurrency = ({
     fetchOptions();
   }, []);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    formDataRef.current.currency = (event.target as HTMLInputElement).value;
+    formDataRef.current.to = (event.target as HTMLInputElement).value;
   };
   return (
     <TextField
       required
-      id="filled-currency"
+      id="filled-to-account"
       select
-      label="Currency"
+      label="To Account"
       defaultValue={options.length ? options[0].value : ""}
-      helperText="Please select your currency"
+      helperText="Please select account transfer to"
       variant="filled"
       onChange={onChange}
     >
@@ -44,4 +44,4 @@ const InputCurrency = ({
   );
 };
 
-export default InputCurrency;
+export default InputFromAccount;

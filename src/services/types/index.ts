@@ -8,7 +8,7 @@ type TransferData = {
   timestamp: Date;
   from: string;
   to: string;
-  description: string;
+  description?: string;
   amount: number;
   currency: string;
 };
